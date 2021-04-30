@@ -6,10 +6,12 @@ silent: true
 
 tasks:
   build:
+    desc: Build the binary
     cmds:
       - go build serve.go
 
   serve:
+    desc: Run the binary
     cmds:
       - ./serve{{ .EXTENSION }}
     vars:

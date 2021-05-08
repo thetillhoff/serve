@@ -7,7 +7,7 @@ import (
 )
 
 func main() {
-	fs := http.FileServer(http.Dir("."))
+	fs := http.FileServer(http.Dir("./"))
 	http.Handle("/", fs)
 
 	fmt.Println("Listening on :3000...")

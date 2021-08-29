@@ -8,7 +8,7 @@ tasks:
   build:
     desc: Build the binary
     cmds:
-      - go build serve.go
+      - go build
 
   serve:
     desc: Run the binary

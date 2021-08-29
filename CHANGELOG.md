@@ -1,5 +1,14 @@
 # CHANGELOG
 
+## v0.1.0 on 2021-08-30
+- Complete rework; now uses cobra as cli-framework.
+- Now supports flags:
+  --verbose for logging each called path
+  --port for customizing port if needed (default is 80)
+  --ipaddress for customizing ip to bind to (default is 0.0.0.0)
+  --directory for serving another directoy as './'
+- 'Release' and 'Prerelease' actions now have proper names
+
 ## v0.0.3 on 2021-08-28
 - added variables for ip and port
 

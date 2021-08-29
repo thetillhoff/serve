@@ -112,7 +112,7 @@ func init() {
 
 	rootCmd.PersistentFlags().BoolVarP(&verbose, "verbose", "v", false, "Every request will be printed.")
 	// rootCmd.PersistentFlags().StringVarP(&logfile, "logfile", "l", "", "Output to file instead of stdout.")
-	rootCmd.PersistentFlags().StringVarP(&port, "port", "p", "80", "Bind to specific port. Default is ':80'.")
+	rootCmd.PersistentFlags().StringVarP(&port, "port", "p", "3000", "Bind to specific port. Default is ':3000'.")
 	rootCmd.PersistentFlags().StringVarP(&ipaddress, "ip-address", "i", "0.0.0.0", "Bind to specific ip-address. Default is '0.0.0.0'.")
 	rootCmd.PersistentFlags().StringVarP(&directory, "directory", "d", "", "Serve another directory. Default is './'.")
 

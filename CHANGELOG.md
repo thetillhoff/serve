@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## v0.1.1 on 2021-08-30
+- Changed default port back to 3000.
+- Updated `README.md` for usage and flags.
+
 ## v0.1.0 on 2021-08-30
 - Complete rework; now uses cobra as cli-framework.
 - Now supports flags:

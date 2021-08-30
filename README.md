@@ -23,6 +23,6 @@ A minimal webserver for local development.
 4. Select the next available tag and apply it with `git tag v0.0.3`.
 5. Push tag with `git push origin v0.0.3`.
 
-> If the build fails, the action will delete the tag itself. Not so much for when the precondition fails.
+> If the precondition is not met or the build fails, the action will delete the (remote) tag itself.
 > If you messed something up, you can delete local tags with `git tag -d v0.0.3`.
 > And you can delete remote tags with `git push --delete origin v0.0.3`.

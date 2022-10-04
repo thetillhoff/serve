@@ -2,14 +2,19 @@
 
 A minimal webserver for local development.
 
-## How to use
+## How to use the cli
 
-`serve` will just run a webserver on 0.0.0.0:3000, which serves the local directory.
-`serve --verbose` does the same, but will also print the path every requests URI.
-`serve --port <portnumber>` changes the port.
-`serve --ipaddress <bind-ip>` changes the ipaddress where `serve` will bind to.
-`serve --directory <path>` changes the directory which is served.
-`serve --help` will display the shortcuts for these flags as well.
+- `serve` will just run a webserver on 0.0.0.0:3000, which serves the local directory.
+- `serve --verbose` does the same, but will also print the path every requests URI.
+- `serve --port <portnumber>` changes the port.
+- `serve --ipaddress <bind-ip>` changes the ipaddress where `serve` will bind to.
+- `serve --directory <path>` changes the directory which is served.
+- `serve --help` will display the shortcuts for these flags as well.
+
+## Additional features of the library
+
+- The Setting InMemoryFile can be used to provide `serve` with a `map[string]string` (=> `map[path]filecontent`) of additional files that are served under `/inmemory`.
+  If no such setting is provided, the route `/inmemory` can be used to serve static files.
 
 ## How to release
 

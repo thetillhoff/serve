@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## v0.1.2 on 2022-10-04
+- Moved the webserver into a package. It can now be imported in other projects.
+- Added an intermediate layer for the settings (like directory, port, ...). These can be used when the webserver is used in other projects.
+- Updated Go version and all dependencies.
+
 ## v0.1.1 on 2021-08-30
 - Changed default port back to 3000.
 - Updated `README.md` for usage and flags.

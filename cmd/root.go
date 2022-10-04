@@ -1,34 +1,12 @@
-/*
-Copyright © 2021 Till Hoffmann <till.hoffmann@enforge.de>
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in
-all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-THE SOFTWARE.
-*/
 package cmd
 
 import (
 	"fmt"
 	"log"
-	"net/http"
 	"os"
-	"path"
 
 	"github.com/spf13/cobra"
+	"github.com/thetillhoff/serve/pkg/serve"
 
 	"github.com/spf13/viper"
 )
@@ -36,25 +14,16 @@ import (
 var (
 	cfgFile string
 
-	fileServer http.Handler
-
-	verbose   bool
-	logfile   string
-	port      string
-	ipaddress string
-	directory string
+	verbose   *bool
+	directory *string
+	ipaddress *string
+	port      *string
 )
 
 // rootCmd represents the base command when called without any subcommands
 var rootCmd = &cobra.Command{
 	Use:   "serve",
-	Short: "A brief description of your application",
-	Long: `A longer description that spans multiple lines and likely contains
-examples and usage of using your application. For example:
-
-Cobra is a CLI library for Go that empowers applications.
-This application is a tool to generate the needed files
-to quickly create a Cobra application.`,
+	Short: "A simple webserver",
 	// Uncomment the following line if your bare application
 	// has an action associated with it:
 	Run: func(cmd *cobra.Command, args []string) {
@@ -62,33 +31,22 @@ to quickly create a Cobra application.`,
 			err error
 		)
 
-		// Parsing or setting default for directory
-		if directory == "" {
-			directory = "./"
-		} else {
-			directory = path.Clean(directory)
+		settings := []serve.Setting{}
+		if verbose != nil {
+			settings = append(settings, serve.Setting{Type: serve.Verbose, Value: verbose})
+		}
+		if directory != nil && *directory != "" {
+			settings = append(settings, serve.Setting{Type: serve.Directory, Value: directory})
+		}
+		if ipaddress != nil && *ipaddress != "" {
+			settings = append(settings, serve.Setting{Type: serve.IPAddress, Value: ipaddress})
+		}
+		if port != nil && *port != "" {
+			settings = append(settings, serve.Setting{Type: serve.Port, Value: port})
 		}
 
-		if verbose {
-			log.Println("INF verbose=true")
-			// log.Println("INF logfile=" + logfile)
-			log.Println("INF port=" + port)
-			log.Println("INF ipaddress=" + ipaddress)
-			log.Println("INF directory=" + directory)
-		}
+		err = serve.Serve(settings...)
 
-		// Creating Webserver for static files
-		fileServer = http.FileServer(http.Dir(directory))
-		http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-			if verbose {
-				log.Println("INF Serving ", r.RequestURI)
-			}
-			fileServer.ServeHTTP(w, r)
-		})
-
-		// Starting Webserver
-		fmt.Println("Listening on " + ipaddress + ":" + port + " ...")
-		err = http.ListenAndServe(ipaddress+":"+port, nil)
 		if err != nil {
 			log.Fatal(err)
 		}
@@ -110,11 +68,10 @@ func init() {
 
 	rootCmd.PersistentFlags().StringVar(&cfgFile, "config", "", "config file (default is $HOME/.serve.yaml)")
 
-	rootCmd.PersistentFlags().BoolVarP(&verbose, "verbose", "v", false, "Every request will be printed.")
-	// rootCmd.PersistentFlags().StringVarP(&logfile, "logfile", "l", "", "Output to file instead of stdout.")
-	rootCmd.PersistentFlags().StringVarP(&port, "port", "p", "3000", "Bind to specific port. Default is ':3000'.")
-	rootCmd.PersistentFlags().StringVarP(&ipaddress, "ip-address", "i", "0.0.0.0", "Bind to specific ip-address. Default is '0.0.0.0'.")
-	rootCmd.PersistentFlags().StringVarP(&directory, "directory", "d", "", "Serve another directory. Default is './'.")
+	rootCmd.PersistentFlags().BoolVarP(verbose, "verbose", "v", true, "Every request will be printed.")
+	rootCmd.PersistentFlags().StringVarP(directory, "directory", "d", "", "Serve another directory. Default is './'.")
+	rootCmd.PersistentFlags().StringVarP(ipaddress, "ip-address", "i", "", "Bind to specific ip-address. Default is '0.0.0.0'.")
+	rootCmd.PersistentFlags().StringVarP(port, "port", "p", "", "Bind to specific port. Default is ':3000'.")
 
 	// Cobra also supports local flags, which will only run
 	// when this action is called directly.

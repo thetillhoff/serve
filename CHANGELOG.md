@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## v1.0.1 on 2023-04-01
+- Added protocol to initial output. Consoles recognize it as URL now.
+
 ## v1.0.0 on 2023-04-01
 - Changed settings-system from parameter-based to instantiation-based for configuration and method calling.
   Example of the new calling system:

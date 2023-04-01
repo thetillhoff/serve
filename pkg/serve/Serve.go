@@ -46,7 +46,7 @@ func (engine Engine) Serve() error {
 	}
 
 	// Starting Webserver
-	log.Println("Listening on", engine.Ipaddress+":"+engine.Port, "...")
+	log.Println("Listening on http://"+engine.Ipaddress+":"+engine.Port, "...")
 	err = http.ListenAndServe(engine.Ipaddress+":"+engine.Port, nil)
 	if err != nil {
 		log.Fatal(err)

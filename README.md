@@ -4,17 +4,16 @@ A minimal webserver for local development.
 
 ## How to use the cli
 
-- `serve` will just run a webserver on 0.0.0.0:3000, which serves the local directory.
+- `serve` will just run a webserver on 0.0.0.0:3000, and serve the local directory.
 - `serve --verbose` does the same, but will also print the path every requests URI.
 - `serve --port <portnumber>` changes the port.
 - `serve --ipaddress <bind-ip>` changes the ipaddress where `serve` will bind to.
 - `serve --directory <path>` changes the directory which is served.
 - `serve --help` will display the shortcuts for these flags as well.
 
-## Additional features of the library
+## Additional settings when used as a library
 
-- The Setting InMemoryFile can be used to provide `serve` with a `map[string]string` (=> `map[path]filecontent`) of additional files that are served under `/inmemory`.
-  If no such setting is provided, the route `/inmemory` can be used to serve static files.
+- `Engine.InMemoryFiles` is a map of path:content pairs of files that will be served as well. To serve them, set the `Engine.Mode` to either `InMemoryOnly` or `InMemoryFirst`. The latter will still serve the directory contents if they file was not found in the `Engine.InMemoryFiles` map.
 
 ## How to release
 

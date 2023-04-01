@@ -1,5 +1,17 @@
 # CHANGELOG
 
+## v1.0.0 on 2023-04-01
+- Changed settings-system from parameter-based to instantiation-based for configuration and method calling.
+  Example of the new calling system:
+  ```
+  serveEngine := serve.DefaultEngine()
+  serveEngine.Verbose = true
+  serveEngine.Serve()
+  ```
+- Upgraded Golang version from 1.19 to 1.20
+- Updated all dependencies
+- Updated contact information in `LICENSE` file.
+
 ## v0.1.3 on 2022-10-04
 - Added capability to serve in-memory files when used as library (under `/inmemory/`). If no such files are passed via `InMemoryFile` Setting, the `/inmemory` path can be used for static content.
 

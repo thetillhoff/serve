@@ -14,10 +14,10 @@ import (
 var (
 	cfgFile string
 
-	verbose   *bool
-	directory *string
-	ipaddress *string
-	port      *string
+	verbose   bool
+	directory string
+	ipaddress string
+	port      string
 )
 
 // rootCmd represents the base command when called without any subcommands
@@ -31,21 +31,13 @@ var rootCmd = &cobra.Command{
 			err error
 		)
 
-		settings := []serve.Setting{}
-		if verbose != nil {
-			settings = append(settings, serve.Setting{Type: serve.Verbose, Value: verbose})
-		}
-		if directory != nil && *directory != "" {
-			settings = append(settings, serve.Setting{Type: serve.Directory, Value: directory})
-		}
-		if ipaddress != nil && *ipaddress != "" {
-			settings = append(settings, serve.Setting{Type: serve.IPAddress, Value: ipaddress})
-		}
-		if port != nil && *port != "" {
-			settings = append(settings, serve.Setting{Type: serve.Port, Value: port})
-		}
+		serveEngine := serve.DefaultEngine()
+		serveEngine.Verbose = verbose
+		serveEngine.Directory = directory
+		serveEngine.Ipaddress = ipaddress
+		serveEngine.Port = port
 
-		err = serve.Serve(settings...)
+		serveEngine.Serve()
 
 		if err != nil {
 			log.Fatal(err)
@@ -68,10 +60,10 @@ func init() {
 
 	rootCmd.PersistentFlags().StringVar(&cfgFile, "config", "", "config file (default is $HOME/.serve.yaml)")
 
-	rootCmd.PersistentFlags().BoolVarP(verbose, "verbose", "v", true, "Every request will be printed.")
-	rootCmd.PersistentFlags().StringVarP(directory, "directory", "d", "", "Serve another directory. Default is './'.")
-	rootCmd.PersistentFlags().StringVarP(ipaddress, "ip-address", "i", "", "Bind to specific ip-address. Default is '0.0.0.0'.")
-	rootCmd.PersistentFlags().StringVarP(port, "port", "p", "", "Bind to specific port. Default is ':3000'.")
+	rootCmd.PersistentFlags().BoolVarP(&verbose, "verbose", "v", false, "Every request will be printed.")
+	rootCmd.PersistentFlags().StringVarP(&directory, "directory", "d", "./", "Serve another directory. Default is './'.")
+	rootCmd.PersistentFlags().StringVarP(&ipaddress, "ip-address", "i", "0.0.0.0", "Bind to specific ip-address. Default is '0.0.0.0'.")
+	rootCmd.PersistentFlags().StringVarP(&port, "port", "p", "3000", "Bind to specific port. Default is ':3000'.")
 
 	// Cobra also supports local flags, which will only run
 	// when this action is called directly.

@@ -11,6 +11,16 @@ A minimal webserver for local development.
 - `serve --directory <path>` changes the directory which is served.
 - `serve --help` will display the shortcuts for these flags as well.
 
+## Installation
+
+```sh
+wget https://github.com/thetillhoff/serve/releases/download/v1.0.2/serve_linux_amd64
+wget https://github.com/thetillhoff/serve/releases/download/v1.0.2/serve_linux_amd64.sha256
+sha256sum -c serve_linux_amd64.sha256
+sudo install serve_linux_amd64 /usr/local/bin/serve # automatically sets rwxr-xr-x permissions
+rm serve_linux_amd64 serve_linux_amd64.sha256
+```
+
 ## Additional settings when used as a library
 
 - `Engine.InMemoryFiles` is a map of path:content pairs of files that will be served as well. To serve them, set the `Engine.Mode` to either `InMemoryOnly` or `InMemoryFirst`. The latter will still serve the directory contents if they file was not found in the `Engine.InMemoryFiles` map.

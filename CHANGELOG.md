@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## v1.0.2 on 2023-07-09
+- Update dependencies
+- Add installation instructions to README.md
+
 ## v1.0.1 on 2023-04-01
 - Added protocol to initial output. Consoles recognize it as URL now.
 

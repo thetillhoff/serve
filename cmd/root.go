@@ -1,3 +1,6 @@
+/*
+Copyright © 2023 Till Hoffmann <till@thetillhoff.de>
+*/
 package cmd
 
 import (

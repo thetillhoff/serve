@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## v1.1.0 on 2023-10-14
+- Update dependencies
+- Add PR check pipeline
+- Update release pipeline
+- Add `version` command
+
 ## v1.0.2 on 2023-07-09
 - Update dependencies
 - Add installation instructions to README.md
